@@ -1,11 +1,18 @@
 <script lang="ts">
-    import { ChevronLeft, ChevronRight, House } from "@lucide/svelte";
+    import {
+        ArrowLeft,
+        ArrowRight,
+        ChevronLeft,
+        ChevronRight,
+        House,
+    } from "@lucide/svelte";
     import { QUIZ_DATA } from "$lib/quiz";
+    import IntroductionBackground from "$lib/assets/backgrounds/introduction.png?enhanced";
     import HomeBackground from "$lib/assets/backgrounds/home.png?enhanced";
     import QuizBackground from "$lib/assets/backgrounds/quiz.png?enhanced";
     import FeedbackBackground from "$lib/assets/backgrounds/feedback.png?enhanced";
 
-    let currentQuizId: number = $state(0);
+    let currentQuizId: number = $state(-1);
     let selectedOption: string = $state("");
     let showFeedback = $state(false);
 
@@ -27,7 +34,13 @@
         handleSelectQuiz(1);
     };
 
-    const handleHome = () => {
+    const goToIntroduction = () => {
+        currentQuizId = -1;
+        selectedOption = "";
+        showFeedback = false;
+    };
+
+    const goHome = () => {
         currentQuizId = 0;
         selectedOption = "";
         showFeedback = false;
@@ -67,45 +80,120 @@
     <main
         class="w-full h-full rounded-xl shadow-2xl overflow-hidden min-h-[700px] flex justify-center items-center"
     >
-        {#if currentQuizId === 0}
+        {#if currentQuizId === -1}
+            <!-- Introduction -->
+            <enhanced:img
+                src={IntroductionBackground}
+                alt="Introduction Background"
+                class="absolute top-0 left-0 w-screen h-screen -z-1"
+            />
+            <div class="w-full h-full flex flex-col">
+                <div class="h-1/4 flex items-center justify-center">
+                    <h1 class="text-6xl font-bold">Kviz navodila</h1>
+                </div>
+                <div class="grow w-full grid grid-cols-5">
+                    <div class="h-2/3 col-start-3 col-span-2">
+                        <div class="h-full flex flex-col">
+                            <div class="grow space-y-4 text-gray-700 text-3xl">
+                                <p>
+                                    Vsak dan sprejemamo odločitve. Majhne in
+                                    velike. Včasih gre za denar, drugič za
+                                    odnose, zaupanje ali poštenost. Prav iz
+                                    takih trenutkov se učimo in spoznavamo, kdo
+                                    smo ter kaj nam je pomembno.
+                                </p>
+                                <p>
+                                    V naslednjih osmih scenarijih so
+                                    predstavljene različne življenjske
+                                    situacije. Te vas bodo spodbudile k
+                                    razmisleku, kako bi se v posameznem primeru
+                                    odločili in ravnali. Za vsako odločitev
+                                    boste prejeli povratno informacijo, ki vam
+                                    bo pomagala ozavestiti in razumeti posledice
+                                    vaše izbire ter razloge, ki so vas do nje
+                                    vodili. Ni vedno ene same tako imenovane
+                                    pravilne rešitve.
+                                </p>
+                                <p>
+                                    Pomembno je, da razmislite, kako bi se v
+                                    dani situaciji odzvali in poskušate
+                                    predvideti, kako bi vaša odločitev vplivala
+                                    na vas in druge.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button
+                                onclick={goHome}
+                                class="bg-[#1aa7d3] text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-colors text-lg"
+                            >
+                                Začni kviz →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {:else if currentQuizId === 0}
             <!-- Render the Home Screen -->
-            <div class="w-1/2 p-8 md:p-12 text-center">
-                <enhanced:img
-                    src={HomeBackground}
-                    alt="Home Background"
-                    class="absolute top-20 left-0 w-full h-full -z-1 rounded-md mb-2"
-                />
-                <h1 class="text-3xl font-bold text-gray-800 mb-4">
-                    Kviz Odločitev
-                </h1>
-
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                    {#each QUIZ_DATA as quiz, index}
-                        <button
-                            title={quiz.title}
-                            class="rounded-lg shadow-md p-3 bg-white cursor-pointer transition-all transform hover:scale-105 hover:shadow-lg"
-                            onclick={() => handleSelectQuiz(index + 1)}
-                        >
-                            <enhanced:img
-                                src={quiz.image}
-                                alt={quiz.title}
-                                class="w-full h-auto rounded-md mb-2"
-                            />
-                        </button>
-                    {/each}
+            <enhanced:img
+                src={HomeBackground}
+                alt="Home Background"
+                class="absolute top-0 left-0 w-screen h-screen -z-1"
+            />
+            <div class="w-full h-full flex flex-col items-center">
+                <div class="h-1/4 flex items-center justify-center">
+                    <h1 class="text-6xl font-bold">Kviz Odločitev</h1>
                 </div>
 
-                <button
-                    onclick={handleStart}
-                    class="w-full bg-[#1aa7d3] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors text-lg"
-                >
-                    Začni kviz
-                </button>
+                <div class="w-5/8 h-1/2">
+                    <div
+                        class="w-full grid grid-cols-4 justify-center items-center"
+                    >
+                        {#each QUIZ_DATA as quiz, index}
+                            <div class="flex items-center justify-center">
+                                <button
+                                    title={quiz.title}
+                                    class="rounded-lg shadow-md p-2 m-2 bg-white cursor-pointer transition-all transform hover:scale-105 hover:shadow-lg"
+                                    onclick={() => handleSelectQuiz(index + 1)}
+                                >
+                                    <enhanced:img
+                                        src={quiz.image}
+                                        alt={quiz.title}
+                                        class="rounded-md mb-4"
+                                    />
+                                    <p>{quiz.title}</p>
+                                </button>
+                            </div>
+                        {/each}
+                        <div
+                            class="col-span-2 flex items-center justify-center mt-8"
+                        >
+                            <button
+                                onclick={goToIntroduction}
+                                class="inline-flex items-center bg-[#1aa7d3] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors text-4xl"
+                            >
+                                <ArrowLeft class="mr-2" /> Kviz navodila
+                            </button>
+                        </div>
+                        <div
+                            class="col-span-2 flex items-center justify-center mt-4"
+                        >
+                            <button
+                                onclick={handleStart}
+                                class="inline-flex items-center bg-[#1aa7d3] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors text-4xl"
+                            >
+                                {QUIZ_DATA[0].title}
+                                <ArrowRight class="ml-2" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         {:else if quiz !== null}
-            <div class="h-2/3 grid grid-cols-5">
+            <div class="w-full h-full flex items-center">
+                <div class="w-1/4 h-full"></div>
                 <!-- Main Quiz Content -->
-                <div class="col-start-2 col-span-3 p-8 md:p-12 overflow-y-auto">
+                <div class="w-1/2 p-8">
                     <!-- Header & Navigation -->
                     <div class="flex justify-between items-center mb-6">
                         <button
@@ -115,9 +203,7 @@
                         >
                             <ChevronLeft class="w-6 h-6 text-gray-600" />
                         </button>
-                        <h2
-                            class="text-xl md:text-2xl font-bold text-gray-800 text-center"
-                        >
+                        <h2 class="text-xl font-bold text-gray-800 text-center">
                             Scenarij {quiz.id}: {quiz.title}
                         </h2>
                         <button
@@ -137,8 +223,8 @@
                         <!-- Options View -->
                         <enhanced:img
                             src={QuizBackground}
-                            alt="Home Background"
-                            class="absolute top-0 left-0 w-full h-full -z-1 rounded-md mb-2"
+                            alt="Quiz Background"
+                            class="absolute top-0 left-0 w-screen h-screen -z-1"
                         />
                         <div class="space-y-4">
                             {#each Object.entries(quiz.options) as [option, text]}
@@ -176,8 +262,8 @@
                         <!-- Feedback View -->
                         <enhanced:img
                             src={FeedbackBackground}
-                            alt="Home Background"
-                            class="absolute top-0 left-0 w-full h-full -z-1 rounded-md mb-2"
+                            alt="Feedback Background"
+                            class="absolute top-0 left-0 w-full h-full -z-1"
                         />
                         <div
                             class="border-2 rounded-lg p-4 flex items-center space-x-4 cursor-pointer transition-all border-blue-500 bg-blue-50 ring-2 ring-blue-500"
@@ -215,7 +301,7 @@
 
                                 {#if isLastQuiz}
                                     <button
-                                        onclick={handleHome}
+                                        onclick={goHome}
                                         class="w-full sm:w-1/2 bg-[#1aa7d3] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors"
                                     >
                                         Pojdi na domačo stran
@@ -238,7 +324,7 @@
                     class="w-20 flex flex-col items-center justify-center space-y-2 bg-gray-50 p-4 rounded-r-xl"
                 >
                     <button
-                        onclick={handleHome}
+                        onclick={goHome}
                         class="p-2 text-gray-500 hover:text-blue-600 hover:bg-gray-200 rounded-full"
                         title="Go to Home"
                     >
@@ -248,14 +334,16 @@
                     <!-- Spacer -->
                     {#each QUIZ_DATA as quiz, index}
                         <button
-                            class={`w-2.5 h-10 rounded-full cursor-pointer ${
+                            class={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg cursor-pointer ${
                                 index + 1 === currentQuizId
-                                    ? "bg-[#1aa7d3]"
-                                    : "bg-gray-300 hover:bg-gray-400"
+                                    ? "bg-[#1aa7d3] text-white"
+                                    : "bg-gray-300 text-gray-700 hover:bg-gray-400"
                             }`}
                             onclick={() => handleSelectQuiz(index + 1)}
                             title={`Pojdi na kviz ${index + 1}: ${quiz.title}`}
-                        ></button>
+                        >
+                            {String(quiz.id).padStart(2, "0")}
+                        </button>
                     {/each}
                 </div>
             </div>
