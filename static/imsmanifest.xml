@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  SCORM 1.2 Manifest for a SvelteKit Static Site Build
+
+  This file defines the structure and content for the LMS.
+  - The <organization> tag defines the course structure.
+  - The <resource> tag defines the main launchable content (your index.html).
+  - All other files are listed as dependencies within that <resource> tag.
+-->
+<manifest
+    identifier="si.lu-velenje.decision-quiz"
+    version="1.0"
+    xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+    xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2imscp_rootv1p1p2.xsd
+          http://www.adlnet.org/xsd/adlcp_rootv1p2adlcp_rootv1p2.xsd"
+>
+
+  <!-- 1. METADATA: Describes the course -->
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+    <lom xmlns="http://ltsc.ieee.org/xsd/LOM">
+      <general>
+        <title>Kviz Odločitev</title>
+        <description
+                >1 kviz ki ima 8 scenarijev. Ko odgovorijo se jim pokaže povratna informacija</description>
+      </general>
+    </lom>
+  </metadata>
+
+  <!-- 2. ORGANIZATIONS: The course structure shown to the learner -->
+  <organizations default="lu-velenje">
+    <organization identifier="lu-velenje">
+      <title>Kviz Odločitev</title>
+      <!-- This item is the launchable unit (SCO) -->
+      <item identifier="ITEM-1" identifierref="RES-1">
+        <title>Kviz Odločitev</title>
+      </item>
+    </organization>
+  </organizations>
+
+  <!-- 3. RESOURCES: The actual files -->
+  <resources>
+    <!--
+      This is the main resource (SCO).
+      - href="index.html" is the entry point.
+      - All other files are listed as dependencies.
+    -->
+    <resource
+            identifier="RES-1"
+            type="webcontent"
+            adlcp:scormtype="sco"
+            href="index.html"
+        >
+
+      <!-- List all files from your build output here -->
+      <file href="index.html" />
+    </resource>
+  </resources>
+</manifest>
