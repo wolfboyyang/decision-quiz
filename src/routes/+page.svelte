@@ -1,11 +1,5 @@
 <script lang="ts">
-    import {
-        ArrowLeft,
-        ArrowRight,
-        ChevronLeft,
-        ChevronRight,
-        House,
-    } from "@lucide/svelte";
+    import { ChevronLeft, ChevronRight, House } from "@lucide/svelte";
     import { QUIZ_DATA } from "$lib/quiz";
     import IntroductionBackground from "$lib/assets/backgrounds/introduction.png?enhanced";
     import HomeBackground from "$lib/assets/backgrounds/home.png?enhanced";
@@ -61,11 +55,6 @@
     const handleSelectOption = (optionId: string) => {
         if (!showFeedback) {
             selectedOption = optionId;
-        }
-    };
-
-    const handleConfirm = () => {
-        if (selectedOption) {
             showFeedback = true;
         }
     };
@@ -94,7 +83,9 @@
                 <div class="grow w-full grid grid-cols-5">
                     <div class="h-2/3 col-start-3 col-span-2">
                         <div class="h-full flex flex-col">
-                            <div class="grow space-y-4 text-gray-700 text-3xl">
+                            <div
+                                class="space-y-4 text-gray-700 xl:text-xl 2xl:text-3xl"
+                            >
                                 <p>
                                     Vsak dan sprejemamo odločitve. Majhne in
                                     velike. Včasih gre za denar, drugič za
@@ -125,7 +116,7 @@
                         <div class="text-center">
                             <button
                                 onclick={goHome}
-                                class="bg-[#1aa7d3] text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-colors text-lg"
+                                class="bg-[#1aa7d3] text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-colors text-4xl"
                             >
                                 Začni kviz →
                             </button>
@@ -142,15 +133,17 @@
             />
             <div class="w-full h-full flex flex-col items-center">
                 <div class="h-1/4 flex items-center justify-center">
-                    <h1 class="text-6xl font-bold">Kviz Odločitev</h1>
+                    <h1 class="text-4xl font-bold">Kviz Odločitev</h1>
                 </div>
 
                 <div class="w-5/8 h-1/2">
                     <div
-                        class="w-full grid grid-cols-4 justify-center items-center"
+                        class="w-full h-full grid grid-cols-4 grid-rows-2 justify-center items-center p-2"
                     >
                         {#each QUIZ_DATA as quiz, index}
-                            <div class="flex items-center justify-center">
+                            <div
+                                class="w flex items-center justify-center p-16"
+                            >
                                 <button
                                     title={quiz.title}
                                     class="rounded-lg shadow-md p-2 m-2 bg-white cursor-pointer transition-all transform hover:scale-105 hover:shadow-lg"
@@ -165,25 +158,28 @@
                                 </button>
                             </div>
                         {/each}
+                    </div>
+                    <div
+                        class="w-full inline-flex justify-center items-center gap-20"
+                    >
                         <div
-                            class="col-span-2 flex items-center justify-center mt-8"
+                            class="col-span-2 flex items-center justify-center"
                         >
                             <button
                                 onclick={goToIntroduction}
                                 class="inline-flex items-center bg-[#1aa7d3] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors text-4xl"
                             >
-                                <ArrowLeft class="mr-2" /> Kviz navodila
+                                ← Kviz navodila
                             </button>
                         </div>
                         <div
-                            class="col-span-2 flex items-center justify-center mt-4"
+                            class="col-span-2 flex items-center justify-center"
                         >
                             <button
                                 onclick={handleStart}
                                 class="inline-flex items-center bg-[#1aa7d3] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors text-4xl"
                             >
-                                {QUIZ_DATA[0].title}
-                                <ArrowRight class="ml-2" />
+                                {QUIZ_DATA[0].title} →
                             </button>
                         </div>
                     </div>
@@ -193,9 +189,11 @@
             <div class="w-full h-full flex items-center">
                 <div class="w-1/4 h-full"></div>
                 <!-- Main Quiz Content -->
-                <div class="w-1/2 p-8">
+                <div class="w-1/2 h-1/2 flex flex-col justify-between">
                     <!-- Header & Navigation -->
-                    <div class="flex justify-between items-center mb-6">
+                    <div
+                        class="flex justify-between items-center mb-6 text-xl md:text-2xl font-bold text-gray-800 text-center p-4 rounded-lg"
+                    >
                         <button
                             onclick={handlePrevQuiz}
                             disabled={currentQuizId < 2}
@@ -203,9 +201,13 @@
                         >
                             <ChevronLeft class="w-6 h-6 text-gray-600" />
                         </button>
-                        <h2 class="text-xl font-bold text-gray-800 text-center">
-                            Scenarij {quiz.id}: {quiz.title}
-                        </h2>
+                        <div class="p-4 grow bg-gray-300">
+                            <h2
+                                class="text-xl font-bold text-gray-800 text-center uppercase"
+                            >
+                                {quiz.title}
+                            </h2>
+                        </div>
                         <button
                             onclick={handleNextQuiz}
                             disabled={isLastQuiz}
@@ -214,109 +216,117 @@
                             <ChevronRight class="w-6 h-6 text-gray-600" />
                         </button>
                     </div>
-
-                    <!-- Scenario -->
-                    <p class="text-gray-700 text-lg mb-8">{quiz.scenario}</p>
-
-                    <!-- Show Options OR Feedback -->
-                    {#if !showFeedback}
-                        <!-- Options View -->
-                        <enhanced:img
-                            src={QuizBackground}
-                            alt="Quiz Background"
-                            class="absolute top-0 left-0 w-screen h-screen -z-1"
-                        />
-                        <div class="space-y-4">
-                            {#each Object.entries(quiz.options) as [option, text]}
-                                <button
-                                    class={`w-full border-2 rounded-lg p-4 flex items-center space-x-4 cursor-pointer transition-all ${
-                                        selectedOption === option
-                                            ? "border-blue-500 bg-blue-50 ring-2 ring-blue-500"
-                                            : "border-gray-200 hover:bg-gray-50"
-                                    }`}
-                                    onclick={() => handleSelectOption(option)}
-                                >
-                                    <div
-                                        class={`shrink-0 w-8 h-8 rounded-full font-bold flex items-center justify-center ${
-                                            selectedOption === option
-                                                ? "bg-[#1aa7d3] text-white"
-                                                : "bg-gray-200 text-gray-700"
-                                        }`}
-                                    >
-                                        {option}
-                                    </div>
-                                    <p class="text-gray-800 text-left">
-                                        {text}
-                                    </p>
-                                </button>
-                            {/each}
-                            <button
-                                onclick={handleConfirm}
-                                disabled={!selectedOption}
-                                class="w-full bg-[#1aa7d3] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors text-lg mt-8 disabled:bg-gray-300 disabled:cursor-not-allowed"
-                            >
-                                Potrdi
-                            </button>
-                        </div>
-                    {:else if selectedOption !== ""}
-                        <!-- Feedback View -->
-                        <enhanced:img
-                            src={FeedbackBackground}
-                            alt="Feedback Background"
-                            class="absolute top-0 left-0 w-full h-full -z-1"
-                        />
-                        <div
-                            class="border-2 rounded-lg p-4 flex items-center space-x-4 cursor-pointer transition-all border-blue-500 bg-blue-50 ring-2 ring-blue-500"
+                    <div class="grow flex flex-col justify-between">
+                        <!-- Scenario -->
+                        <p
+                            class="text-white text-2xl p-4 my-8 bg-[#1aa7d3] rounded-2xl"
                         >
-                            <div
-                                class="shrink-0 w-8 h-8 rounded-full font-bold flex items-center justify-center bg-[#1aa7d3] text-white"
-                            >
-                                {selectedOption}
+                            {quiz.scenario}
+                        </p>
+
+                        <!-- Show Options OR Feedback -->
+                        {#if !showFeedback}
+                            <!-- Options View -->
+                            <enhanced:img
+                                src={QuizBackground}
+                                alt="Quiz Background"
+                                class="absolute top-0 left-0 w-screen h-screen -z-1"
+                            />
+                            <div class="space-y-4">
+                                {#each Object.entries(quiz.options) as [option, text]}
+                                    <button
+                                        class={`w-full border-2 rounded-lg p-4 flex items-center space-x-4 cursor-pointer transition-all ${
+                                            selectedOption === option
+                                                ? "border-blue-500 bg-blue-50 ring-2 ring-blue-500"
+                                                : "border-gray-200 hover:bg-gray-50"
+                                        }`}
+                                        onclick={() =>
+                                            handleSelectOption(option)}
+                                    >
+                                        <div
+                                            class="shrink-0 w-8 h-8 rounded-full font-bold flex items-center justify-center text-xl bg-gray-200 text-gray-700"
+                                        >
+                                            {option}
+                                        </div>
+                                        <p
+                                            class="text-gray-800 text-left text-xl"
+                                        >
+                                            {text}
+                                        </p>
+                                    </button>
+                                {/each}
                             </div>
-                            <p class="text-gray-800">
-                                {quiz.options[selectedOption]}
-                            </p>
-                        </div>
-                        <div class="animate-fadeIn">
-                            <h3
-                                class="text-xl font-semibold mb-4 text-gray-800"
-                            >
-                                POVRATNA INFORMACIJA
-                            </h3>
+                        {:else if selectedOption !== ""}
+                            <!-- Feedback View -->
+                            <enhanced:img
+                                src={FeedbackBackground}
+                                alt="Feedback Background"
+                                class="absolute top-0 left-0 w-full h-full -z-1"
+                            />
                             <div
-                                class="p-4 rounded-lg bg-blue-50 border-l-4 border-blue-400"
+                                class="border-2 rounded-lg p-4 flex items-center space-x-4 cursor-pointer transition-all border-blue-500 bg-blue-50 ring-2 ring-blue-500"
                             >
+                                <div
+                                    class="shrink-0 w-8 h-8 rounded-full font-bold flex items-center justify-center bg-[#1aa7d3] text-white"
+                                >
+                                    {selectedOption}
+                                </div>
                                 <p class="text-gray-800">
-                                    {quiz.feedback[selectedOption]}
+                                    {quiz.options[selectedOption]}
                                 </p>
                             </div>
-
-                            <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                            <div class="animate-fadeIn mt-4">
+                                <h3
+                                    class="text-xl font-semibold mb-4 text-gray-800"
+                                >
+                                    POVRATNA INFORMACIJA
+                                </h3>
+                                <div
+                                    class="p-4 rounded-lg bg-blue-50 border-l-4 border-gray-400"
+                                >
+                                    <p class="text-gray-800 font-semibold">
+                                        {quiz.feedback[selectedOption]}
+                                    </p>
+                                </div>
+                            </div>
+                        {/if}
+                        <!-- Persistent Bottom Navigation -->
+                        <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                            {#if selectedOption !== ""}
                                 <button
                                     onclick={handleTryAnother}
-                                    class="w-full sm:w-1/2 bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors"
+                                    class="w-full sm:w-1/2 bg-gray-200 text-gray-800 text-4xl font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors"
                                 >
-                                    Poskusi drugega
+                                    ⟳ Poskusi drugega
                                 </button>
+                            {:else}
+                                <button
+                                    onclick={handlePrevQuiz}
+                                    class="w-full sm:w-1/2 bg-[#1aa7d3] text-white text-4xl font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors"
+                                >
+                                    ← {currentQuizId > 1
+                                        ? QUIZ_DATA[currentQuizId - 2].title
+                                        : "Pojdi na domačo stran"}
+                                </button>
+                            {/if}
 
-                                {#if isLastQuiz}
-                                    <button
-                                        onclick={goHome}
-                                        class="w-full sm:w-1/2 bg-[#1aa7d3] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors"
-                                    >
-                                        Pojdi na domačo stran
-                                    </button>
-                                {:else}
-                                    <button
-                                        onclick={handleNextQuiz}
-                                        class="w-full sm:w-1/2 bg-[#1aa7d3] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors"
-                                    >
-                                        Naslednji kviz
-                                    </button>
-                                {/if}
-                            </div>
+                            {#if isLastQuiz}
+                                <button
+                                    onclick={goHome}
+                                    class="w-full sm:w-1/2 bg-[#1aa7d3] text-white text-4xl font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors"
+                                >
+                                    Pojdi na domačo stran
+                                </button>
+                            {:else}
+                                <button
+                                    onclick={handleNextQuiz}
+                                    class="w-full sm:w-1/2 bg-[#1aa7d3] text-white text-4xl font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors"
+                                >
+                                    {QUIZ_DATA[currentQuizId].title} →
+                                </button>
+                            {/if}
                         </div>
-                    {/if}
+                    </div>
                 </div>
 
                 <!-- Vertical Slider -->
