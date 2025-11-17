@@ -6,7 +6,7 @@
     import QuizBackground from "$lib/assets/backgrounds/quiz.png?enhanced";
     import FeedbackBackground from "$lib/assets/backgrounds/feedback.png?enhanced";
 
-    let currentQuizId: number = $state(1);
+    let currentQuizId: number = $state(-1);
     let selectedOption: string = $state("");
     let showFeedback = $state(false);
 
