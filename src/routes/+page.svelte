@@ -197,7 +197,7 @@
                         <button
                             onclick={handlePrevQuiz}
                             disabled={currentQuizId < 2}
-                            class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                            class="p-2 rounded-full hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             <ChevronLeft class="w-6 h-6 text-gray-600" />
                         </button>
@@ -211,7 +211,7 @@
                         <button
                             onclick={handleNextQuiz}
                             disabled={isLastQuiz}
-                            class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                            class="p-2 rounded-full hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             <ChevronRight class="w-6 h-6 text-gray-600" />
                         </button>
