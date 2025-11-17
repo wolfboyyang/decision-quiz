@@ -82,10 +82,8 @@
                 </div>
                 <div class="grow w-full grid grid-cols-5">
                     <div class="h-2/3 col-start-3 col-span-2">
-                        <div class="h-full flex flex-col">
-                            <div
-                                class="space-y-4 text-gray-700 xl:text-xl 2xl:text-3xl"
-                            >
+                        <div class="flex flex-col">
+                            <div class="space-y-4 text-gray-700">
                                 <p>
                                     Vsak dan sprejemamo odločitve. Majhne in
                                     velike. Včasih gre za denar, drugič za
@@ -113,10 +111,10 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="text-center">
+                        <div class="mt-2 text-center">
                             <button
                                 onclick={goHome}
-                                class="bg-[#1aa7d3] text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-colors text-4xl"
+                                class="bg-[#1aa7d3] text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-colors text-2xl"
                             >
                                 Začni kviz →
                             </button>
