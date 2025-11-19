@@ -133,19 +133,19 @@
         <!-- Render the Home Screen -->
         <div class="flex flex-col items-center">
             <h1
-                class="w-1/2 z-1 p-1 rounded-lg xl:p-4 xl:rounded-xl bg-gray-400 xl:text-4xl text-2xl text-center font-bold"
+                class="relative top-2 w-1/2 z-1 p-1 rounded-lg xl:p-4 xl:rounded-xl bg-gray-400 xl:text-4xl text-2xl text-center font-bold"
             >
                 Kviz Odločitev
             </h1>
             <div
-                class="w-5/8 xl:w-7/8 p-2 xl:p-8 relative -top-5 xl:-top-8 flex flex-col border-2 rounded-xl border-gray-400 items-center"
+                class="w-3/4 xl:w-7/8 p-2 xl:p-8 relative -top-3 xl:-top-8 flex flex-col border-2 rounded-xl border-gray-400 items-center"
             >
                 <div
-                    class=" grid grid-cols-4 grid-rows-2 justify-center items-center"
+                    class="grid grid-cols-4 grid-rows-2 justify-center items-center"
                 >
                     {#each QUIZ_DATA as quiz, index}
                         <div
-                            class="p-1 xl:p-2 flex items-center justify-center"
+                            class="px-2 py-1 xl:p-2 flex items-center justify-center"
                         >
                             <button
                                 title={quiz.title}
