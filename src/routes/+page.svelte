@@ -187,7 +187,7 @@
             </div>
         </div>
     {:else if quiz !== null}
-        <div class="w-full h-full flex items-center">
+        <div class="w-full h-full flex items-center border">
             <div class="w-1/4 h-auto">
                 {#if showFeedback}
                     <enhanced:img src={FeedbackCharacter} alt="Feedback" />
@@ -208,7 +208,7 @@
                     >
                         <ChevronLeft class="w-6 h-6 text-gray-600" />
                     </button>
-                    <div class="xl:p-2 grow bg-gray-300">
+                    <div class="xl:p-2 grow bg-gray-400">
                         <h2
                             class="text-lg xl:text-2xl font-bold text-gray-800 text-center uppercase"
                         >
@@ -324,7 +324,7 @@
 
             <!-- Vertical Slider -->
             <div
-                class="w-8 xl:w-20 flex flex-col items-center justify-center space-y-2 bg-gray-50 p-2"
+                class="w-1/16 xl:w-20 flex flex-col items-center justify-center space-y-2 bg-gray-50 p-2"
             >
                 <button
                     onclick={goHome}
