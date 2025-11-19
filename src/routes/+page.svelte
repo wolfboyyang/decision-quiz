@@ -1,10 +1,10 @@
 <script lang="ts">
     import { ChevronLeft, ChevronRight, House } from "@lucide/svelte";
     import { QUIZ_DATA } from "$lib/quiz";
-    import IntroductionBackground from "$lib/assets/backgrounds/introduction.png?enhanced";
-    import HomeBackground from "$lib/assets/backgrounds/home.png?enhanced";
-    import QuizBackground from "$lib/assets/backgrounds/quiz.png?enhanced";
-    import FeedbackBackground from "$lib/assets/backgrounds/feedback.png?enhanced";
+    import Background from "$lib/assets/backgrounds/bg.png?enhanced";
+    import IntroductionCharacter from "$lib/assets/backgrounds/c0.png?enhanced";
+    import QuizCharacter from "$lib/assets/backgrounds/c1.png?enhanced";
+    import FeedbackCharacter from "$lib/assets/backgrounds/c2.png?enhanced";
 
     let currentQuizId: number = $state(-1);
     let selectedOption: string = $state("");
@@ -66,24 +66,35 @@
 </script>
 
 <main class="w-screen h-screen flex justify-center items-center font-sans">
+    <enhanced:img
+        src={Background}
+        alt="Introduction Background"
+        class="absolute top-0 left-0 w-screen h-screen -z-1"
+    />
     {#if currentQuizId === -1}
         <!-- Introduction -->
-        <enhanced:img
-            src={IntroductionBackground}
-            alt="Introduction Background"
-            class="absolute top-0 left-0 w-screen h-screen -z-1"
-        />
-        <div class="flex flex-col">
-            <div class="flex items-center justify-center">
-                <h1 class="p-6 xl:p-28 xl:text-4xl text-2xl font-bold">
-                    Kviz navodila
-                </h1>
-            </div>
-            <div class="grow flex">
-                <div class="w-3/8"></div>
-                <div class="w-15/32 flex flex-col">
+        <div
+            class="w-full h-full flex flex-col items-center justify-center p-1"
+        >
+            <h1
+                class="w-1/2 z-1 p-1 rounded-lg xl:p-4 xl:rounded-xl bg-gray-400 xl:text-4xl text-2xl text-center font-bold"
+            >
+                Kviz navodila
+            </h1>
+            <div
+                class="w-full h-full xl:w-4/5 relative -top-5 xl:-top-8 flex border-2 rounded-xl border-gray-400"
+            >
+                <div class="w-full h-full flex items-center">
+                    <enhanced:img
+                        src={IntroductionCharacter}
+                        alt="Introduction Background"
+                    />
+                </div>
+                <div
+                    class="relative top-3 h-full flex flex-col p-1 justify-center"
+                >
                     <div
-                        class="space-y-1 xl:space-y-4 text-gray-700 text-[10px] xl:text-2xl"
+                        class="space-y-1 xl:space-y-4 text-gray-700 text-sm xl:text-2xl"
                     >
                         <p>
                             Vsak dan sprejemamo odločitve. Majhne in velike.
@@ -107,7 +118,7 @@
                             vaša odločitev vplivala na vas in druge.
                         </p>
                     </div>
-                    <div class="mt-2 xl:mt-8 text-center">
+                    <div class="mt-1 xl:mt-8 text-center">
                         <button
                             onclick={goHome}
                             class="bg-[#1aa7d3] text-white font-bold py-1 px-3 xl:py-3 xl:px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-colors text-sm xl:text-2xl"
@@ -120,24 +131,22 @@
         </div>
     {:else if currentQuizId === 0}
         <!-- Render the Home Screen -->
-        <enhanced:img
-            src={HomeBackground}
-            alt="Home Background"
-            class="absolute top-0 left-0 w-screen h-screen -z-1"
-        />
         <div class="flex flex-col items-center">
-            <div class="flex items-center justify-center">
-                <h1 class="pt-8 pb-1 xl:p-28 xl:text-4xl text-2xl font-bold">
-                    Kviz Odločitev
-                </h1>
-            </div>
-
-            <div class="w-5/8 h-1/2">
+            <h1
+                class="w-1/2 z-1 p-1 rounded-lg xl:p-4 xl:rounded-xl bg-gray-400 xl:text-4xl text-2xl text-center font-bold"
+            >
+                Kviz Odločitev
+            </h1>
+            <div
+                class="w-5/8 xl:w-7/8 p-2 xl:p-8 relative -top-5 xl:-top-8 flex flex-col border-2 rounded-xl border-gray-400 items-center"
+            >
                 <div
-                    class="grid grid-cols-4 grid-rows-2 justify-center items-center"
+                    class=" grid grid-cols-4 grid-rows-2 justify-center items-center"
                 >
                     {#each QUIZ_DATA as quiz, index}
-                        <div class="p-2 flex items-center justify-center">
+                        <div
+                            class="p-1 xl:p-2 flex items-center justify-center"
+                        >
                             <button
                                 title={quiz.title}
                                 class="rounded-lg shadow-md bg-white cursor-pointer transition-all transform hover:scale-105 hover:shadow-lg"
@@ -156,7 +165,7 @@
                     {/each}
                 </div>
                 <div
-                    class="w-full inline-flex justify-center items-center gap-20"
+                    class="w-full inline-flex justify-center items-center gap-20 xl:mt-2"
                 >
                     <div class="col-span-2 flex items-center justify-center">
                         <button
@@ -179,12 +188,18 @@
         </div>
     {:else if quiz !== null}
         <div class="w-full h-full flex items-center">
-            <div class="w-1/4"></div>
+            <div class="w-1/4 h-auto">
+                {#if showFeedback}
+                    <enhanced:img src={FeedbackCharacter} alt="Feedback" />
+                {:else}
+                    <enhanced:img src={QuizCharacter} alt={"Quiz"} />
+                {/if}
+            </div>
             <!-- Main Quiz Content -->
-            <div class="w-11/16 h-full flex flex-col justify-between">
+            <div class="w-full h-full flex flex-col justify-between px-1">
                 <!-- Header & Navigation -->
                 <div
-                    class="flex justify-between items-center mt-1 xl:mt-8 xl:mb-6 text-lg md:text-2xl font-bold text-gray-800 text-center p-2 xl:p-4 rounded-lg"
+                    class="flex justify-between items-center xl:mt-25 text-lg md:text-2xl font-bold text-gray-800 text-center xl:p-4 rounded-lg"
                 >
                     <button
                         onclick={handlePrevQuiz}
@@ -193,9 +208,9 @@
                     >
                         <ChevronLeft class="w-6 h-6 text-gray-600" />
                     </button>
-                    <div class="p-2 grow bg-gray-300">
+                    <div class="xl:p-2 grow bg-gray-300">
                         <h2
-                            class="text-lg font-bold text-gray-800 text-center uppercase"
+                            class="text-lg xl:text-2xl font-bold text-gray-800 text-center uppercase"
                         >
                             {quiz.title}
                         </h2>
@@ -211,7 +226,7 @@
                 <div class="grow flex flex-col justify-between">
                     <!-- Scenario -->
                     <p
-                        class="text-white text-sm xl:text-2xl p-2 mb-1 xl:p-4 bg-[#1aa7d3] rounded-2xl"
+                        class="text-white text-sm xl:text-2xl mb-1 p-1 xl:p-4 bg-[#1aa7d3] rounded-sm"
                     >
                         {quiz.scenario}
                     </p>
@@ -219,15 +234,10 @@
                     <!-- Show Options OR Feedback -->
                     {#if !showFeedback}
                         <!-- Options View -->
-                        <enhanced:img
-                            src={QuizBackground}
-                            alt="Quiz Background"
-                            class="absolute top-0 left-0 w-screen h-screen -z-1"
-                        />
                         <div class="space-y-1">
                             {#each Object.entries(quiz.options) as [option, text]}
                                 <button
-                                    class={`border-2 rounded-lg p-1 xl:p-4 flex items-center space-x-4 cursor-pointer transition-all ${
+                                    class={`w-full border-2 rounded-lg p-1 xl:p-4 flex items-center space-x-4 cursor-pointer transition-all ${
                                         selectedOption === option
                                             ? "border-blue-500 bg-blue-50 ring-2 ring-blue-500"
                                             : "border-gray-200 hover:bg-gray-50"
@@ -249,11 +259,6 @@
                         </div>
                     {:else if selectedOption !== ""}
                         <!-- Feedback View -->
-                        <enhanced:img
-                            src={FeedbackBackground}
-                            alt="Feedback Background"
-                            class="absolute top-0 left-0 w-full h-full -z-1"
-                        />
                         <div
                             class="border-2 rounded-lg p-1 xl:p-4 flex items-center space-x-4 cursor-pointer transition-all border-blue-500 bg-blue-50 ring-2 ring-blue-500"
                         >
@@ -279,11 +284,11 @@
                         </div>
                     {/if}
                     <!-- Persistent Bottom Navigation -->
-                    <div class="flex gap-4 mt-1 mb-1 xl:mb-8 xl:mt-8">
+                    <div class="flex gap-4 mt-1 mb-1 xl:mb-25 xl:mt-8">
                         {#if selectedOption !== ""}
                             <button
                                 onclick={handleTryAnother}
-                                class="w-1/2 bg-gray-200 text-gray-800 text-sm xl:text-4xl font-bold py-1 px-3 xl:py-3 xl:px-6 rounded-lg hover:bg-gray-300 transition-colors"
+                                class="w-1/2 bg-gray-400 text-gray-800 text-sm xl:text-4xl font-bold py-1 px-3 xl:py-3 xl:px-6 rounded-lg hover:bg-gray-300 transition-colors"
                             >
                                 ⟳ Poskusi drugega
                             </button>
@@ -319,7 +324,7 @@
 
             <!-- Vertical Slider -->
             <div
-                class="w-8 xl:w-20 flex flex-col items-center justify-center space-y-2 bg-gray-50 p-2 rounded-r-xl"
+                class="w-8 xl:w-20 flex flex-col items-center justify-center space-y-2 bg-gray-50 p-2"
             >
                 <button
                     onclick={goHome}
