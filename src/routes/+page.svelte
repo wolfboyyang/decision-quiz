@@ -79,7 +79,7 @@
             <h1
                 class="w-1/2 z-1 p-1 rounded-lg xl:p-4 xl:rounded-xl bg-gray-400 xl:text-4xl text-2xl text-center font-bold"
             >
-                Kviz navodila
+                Navodila za kviz
             </h1>
             <div
                 class="w-full h-full xl:w-4/5 relative -top-5 xl:-top-8 flex border-2 rounded-xl border-gray-400"
@@ -109,12 +109,12 @@
                             primeru odločili in ravnali. Za vsako odločitev
                             boste prejeli povratno informacijo, ki vam bo
                             pomagala ozavestiti in razumeti posledice vaše
-                            izbire ter razloge, ki so vas do nje vodili. Ni
-                            vedno ene same tako imenovane pravilne rešitve.
+                            izbire ter razloge, ki so vas pripeljali do nje. V
+                            nekaterih primerih ne obstaja le ena rešitev.
                         </p>
                         <p>
                             Pomembno je, da razmislite, kako bi se v dani
-                            situaciji odzvali in poskušate predvideti, kako bi
+                            situaciji odzvali, in poskušate predvideti, kako bi
                             vaša odločitev vplivala na vas in druge.
                         </p>
                     </div>
@@ -135,7 +135,7 @@
             <h1
                 class="relative top-2 w-1/2 z-1 p-1 rounded-lg xl:p-4 xl:rounded-xl bg-gray-400 xl:text-4xl text-2xl text-center font-bold"
             >
-                Kviz Odločitev
+                Kviz: Odločitev
             </h1>
             <div
                 class="w-3/4 xl:w-7/8 p-2 xl:p-8 relative -top-3 xl:-top-8 flex flex-col border-2 rounded-xl border-gray-400 items-center"
@@ -172,7 +172,7 @@
                             onclick={goToIntroduction}
                             class="inline-flex items-center bg-[#1aa7d3] text-white font-bold py-1 px-3 xl:py-3 xl:px-6 rounded-lg shadow-lg hover:bg-[#168db3] transition-colors text-sm xl:text-xl"
                         >
-                            ← Kviz navodila
+                            ← Navodila za kviz
                         </button>
                     </div>
                     <div class="col-span-2 flex items-center justify-center">
