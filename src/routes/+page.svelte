@@ -16,6 +16,8 @@
     let selectedOption: string = $state("");
     let showFeedback = $state(false);
     let mainElement: HTMLElement;
+    const fullscreenEnabled =
+        typeof document !== "undefined" && document?.fullscreenEnabled;
     let isFullScreen = $state(false);
 
     function toggleFullScreen() {
@@ -90,16 +92,18 @@
     class="w-screen h-screen flex justify-center items-center font-sans"
     bind:this={mainElement}
 >
-    <button
-        class="absolute bottom-2 right-2 hover:text-gray-600 z-2"
-        onclick={toggleFullScreen}
-    >
-        {#if isFullScreen}
-            <Shrink />
-        {:else}
-            <Expand />
-        {/if}
-    </button>
+    {#if fullscreenEnabled}
+        <button
+            class="absolute bottom-2 right-2 hover:text-gray-600 z-2"
+            onclick={toggleFullScreen}
+        >
+            {#if isFullScreen}
+                <Shrink />
+            {:else}
+                <Expand />
+            {/if}
+        </button>
+    {/if}
     <enhanced:img
         src={Background}
         alt="Introduction Background"
