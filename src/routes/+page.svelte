@@ -1,5 +1,11 @@
 <script lang="ts">
-    import { ChevronLeft, ChevronRight, House } from "@lucide/svelte";
+    import {
+        ChevronLeft,
+        ChevronRight,
+        Expand,
+        House,
+        Shrink,
+    } from "@lucide/svelte";
     import { QUIZ_DATA } from "$lib/quiz";
     import Background from "$lib/assets/backgrounds/bg.png?enhanced";
     import IntroductionCharacter from "$lib/assets/backgrounds/c0.png?enhanced";
@@ -9,6 +15,21 @@
     let currentQuizId: number = $state(-1);
     let selectedOption: string = $state("");
     let showFeedback = $state(false);
+    let mainElement: HTMLElement;
+    let isFullScreen = $state(false);
+
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            // If the document is not in full screen mode
+            // make the video full screen
+            mainElement.requestFullscreen();
+            isFullScreen = true;
+        } else {
+            // Otherwise exit the full screen
+            document.exitFullscreen?.();
+            isFullScreen = false;
+        }
+    }
 
     const quiz = $derived(
         currentQuizId > 0 && currentQuizId < QUIZ_DATA.length + 1
@@ -65,7 +86,20 @@
     };
 </script>
 
-<main class="w-screen h-screen flex justify-center items-center font-sans">
+<main
+    class="w-screen h-screen flex justify-center items-center font-sans"
+    bind:this={mainElement}
+>
+    <button
+        class="absolute bottom-2 right-2 hover:text-gray-600 z-2"
+        onclick={toggleFullScreen}
+    >
+        {#if isFullScreen}
+            <Shrink />
+        {:else}
+            <Expand />
+        {/if}
+    </button>
     <enhanced:img
         src={Background}
         alt="Introduction Background"
@@ -83,19 +117,19 @@
                 class="w-full h-full md:w-4/5 relative -top-2 md:-top-8 border-2 rounded-xl border-gray-400"
             >
                 <div
-                    class="w-full h-full mt-5 flex portrait:flex-col items-center md:p-20 md:gap-8"
+                    class="w-full h-full mt-1 flex portrait:flex-col items-center md:p-20 md:gap-8"
                 >
                     <div
-                        class="w-full h-full portrait:w-1/3 portrait:h-auto items-center justify-center flex"
+                        class="w-full h-4/5 portrait:w-1/3 portrait:h-auto items-center justify-center flex"
                     >
                         <enhanced:img
                             src={IntroductionCharacter}
                             alt="Introduction Background"
                         />
                     </div>
-                    <div class="h-full flex flex-col p-1">
+                    <div class="h-4/5 flex flex-col p-1 justify-between">
                         <div
-                            class="space-y-1 md:space-y-4 text-gray-700 text-sm md:text-2xl"
+                            class="space-y-1 md:space-y-4 text-gray-700 text-xs md:text-2xl"
                         >
                             <p>
                                 Vsak dan sprejemamo odločitve. Majhne in velike.
@@ -119,7 +153,7 @@
                                 bi vaša odločitev vplivala na vas in druge.
                             </p>
                         </div>
-                        <div class="mt-1 md:mt-8 text-center">
+                        <div class="mt-1 mb-4 md:mt-8 text-center">
                             <button
                                 onclick={goHome}
                                 class="bg-[#1aa7d3] text-white font-bold py-1 px-3 md:py-3 md:px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-colors text-sm md:text-2xl"
@@ -339,20 +373,18 @@
 
             <!-- Vertical Slider -->
             <div
-                class="w-1/16 portrait:w-full md:w-20 flex flex-col portrait:flex-row items-center justify-center space-y-2 portrait:space-y-0 portrait:space-x-2 bg-gray-50 p-2"
+                class="w-1/16 portrait:w-full md:w-20 flex flex-col portrait:flex-row items-center justify-center space-y-2 portrait:space-y-0 portrait:space-x-1 bg-gray-50 p-2"
             >
                 <button
                     onclick={goHome}
-                    class="p-2 text-gray-500 hover:text-blue-600 hover:bg-gray-200 rounded-full"
+                    class="portrait:relative portrait:-left-2 text-gray-500 hover:text-blue-600 hover:bg-gray-200 rounded-full"
                     title="Go to Home"
                 >
                     <House class="w-6 h-6" />
                 </button>
-                <!-- Spacer -->
-                <div class="md:h-8"></div>
                 {#each QUIZ_DATA as quiz, index}
                     <button
-                        class={`size-6 md:size-10 rounded-full flex items-center justify-center font-bold text-sm md:text-lg cursor-pointer ${
+                        class={`portrait:relative portrait:-left-2 size-6 md:size-10 rounded-full flex items-center justify-center font-bold text-sm md:text-lg cursor-pointer ${
                             index + 1 === currentQuizId
                                 ? "bg-[#1aa7d3] text-white"
                                 : "bg-gray-300 text-gray-700 hover:bg-gray-400"
