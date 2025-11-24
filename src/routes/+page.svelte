@@ -107,7 +107,7 @@
     />
     {#if currentQuizId === -1}
         <!-- Introduction -->
-        <div class="w-full h-full flex flex-col items-center p-1 md:p-20">
+        <div class="w-full h-full flex flex-col items-center p-1 md:p-10">
             <h1
                 class="w-1/2 z-1 p-1 rounded-lg md:p-4 md:rounded-xl bg-gray-400 md:text-2xl text-lg text-center font-bold"
             >
@@ -117,7 +117,7 @@
                 class="w-full h-full md:w-4/5 relative -top-2 md:-top-8 border-2 rounded-xl border-gray-400"
             >
                 <div
-                    class="w-full h-full mt-1 flex portrait:flex-col items-center md:p-20 md:gap-8"
+                    class="w-full h-full mt-1 flex portrait:flex-col items-center md:p-4 md:gap-4"
                 >
                     <div
                         class="w-full h-4/5 portrait:w-1/3 portrait:h-auto items-center justify-center flex"
@@ -129,7 +129,7 @@
                     </div>
                     <div class="h-4/5 flex flex-col p-1 justify-between">
                         <div
-                            class="space-y-1 md:space-y-4 text-gray-700 text-xs md:text-2xl"
+                            class="space-y-1 md:space-y-4 text-gray-700 text-xs md:text-xl"
                         >
                             <p>
                                 Vsak dan sprejemamo odločitve. Majhne in velike.
@@ -223,12 +223,12 @@
             </div>
         </div>
     {:else if quiz !== null}
-        <div class="w-full h-full flex portrait:flex-col items-center md:p-20">
+        <div class="w-full h-full flex portrait:flex-col items-center md:p-10">
             <!-- Main Quiz Content -->
             <div class="w-full h-full flex flex-col justify-between px-1">
                 <!-- Header & Navigation -->
                 <div
-                    class="flex justify-between items-center md:mt-25 text-lg md:text-2xl font-bold text-gray-800 text-center md:p-4 rounded-lg"
+                    class="flex justify-between items-center text-lg md:text-2xl font-bold text-gray-800 text-center md:p-4 rounded-lg"
                 >
                     <button
                         onclick={handlePrevQuiz}
